@@ -10,7 +10,7 @@ sorting capabilities. The ideal tool to deliver a polished and immersive tablist
 - **Plug and play**: Zero configuration required.
 - **Lightweight**: Only the features you need.
 - **LuckPerms support**: Tailor your tablist based on user groups, and set individualized prefixes, colors, and
-  suffixes.
+suffixes.
 
 ## LuckPerms Configuration
 
