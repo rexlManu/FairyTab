@@ -1,4 +1,4 @@
-package de.rexlmanu.paperpluginstarter.utility.exceptions;
+package de.rexlmanu.fairytab.utility.exceptions;
 
 public class PostInitializationException extends RuntimeException {
   public PostInitializationException(Throwable cause) {

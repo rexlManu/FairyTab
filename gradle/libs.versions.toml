@@ -8,8 +8,11 @@ shadow = { id = "com.github.johnrengelman.shadow", version = "7.1.2" }
 lombok = { id = "io.freefair.lombok", version = "6.6.1" }
 paperyml = { id = "net.minecrell.plugin-yml.paper", version = "0.6.0" }
 spotless = { id = "com.diffplug.spotless", version = "6.20.0" }
+hangar = { id = "io.papermc.hangar-publish-plugin", version = "0.0.5" }
+minotaur = { id = "com.modrinth.minotaur", version = "2.8.2" }
 [libraries]
 annotations = { module = "org.jetbrains:annotations", version = "24.0.1" }
-commandframework = { module = "cloud.commandframework:cloud-paper", version = "1.8.3" }
-configlib = { module = "com.github.Exlll.ConfigLib:configlib-paper", version = "v4.2.0" }
 guice = { module = "com.google.inject:guice", version = "7.0.0" }
+luckperms = { module = "net.luckperms:api", version = "5.4" }
+bstats = { module = "org.bstats:bstats-bukkit", version = "3.0.2" }
+classgraph = { module = "io.github.classgraph:classgraph", version = "4.8.162" }

@@ -1,4 +1,4 @@
-package de.rexlmanu.paperpluginstarter.utility.annotations;
+package de.rexlmanu.fairytab.utility.annotations;
 
 import com.google.inject.BindingAnnotation;
 import java.lang.annotation.ElementType;
@@ -9,5 +9,4 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @BindingAnnotation
-public @interface PluginLogger {
-}
+public @interface PluginLogger {}

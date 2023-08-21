@@ -1,14 +1,10 @@
-package de.rexlmanu.paperpluginstarter.utility.annotations;
+package de.rexlmanu.fairytab.utility.autoregister;
 
-import com.google.inject.BindingAnnotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-@BindingAnnotation
-public @interface PostInit {
-}
+@Target({ElementType.TYPE})
+public @interface AutoInit {}
