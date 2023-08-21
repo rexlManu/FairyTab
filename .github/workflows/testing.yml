@@ -1,13 +1,13 @@
-name: Build
+name: Testing
 
 on:
-  workflow_dispatch:
   push:
-    branches: [ 'master' ]
+    branches-ignore:
+      - master
+  pull_request:
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,7 +22,3 @@ jobs:
         with:
           gradle-version: '8.1.1'
           arguments: build
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          path: build/libs/**.jar
