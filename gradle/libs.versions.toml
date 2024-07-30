@@ -15,4 +15,4 @@ annotations = { module = "org.jetbrains:annotations", version = "24.0.1" }
 guice = { module = "com.google.inject:guice", version = "7.0.0" }
 luckperms = { module = "net.luckperms:api", version = "5.4" }
 bstats = { module = "org.bstats:bstats-bukkit", version = "3.0.2" }
-classgraph = { module = "io.github.classgraph:classgraph", version = "4.8.162" }
+classgraph = { module = "io.github.classgraph:classgraph", version = "4.8.174" }
