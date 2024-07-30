@@ -4,7 +4,7 @@ googlejavaformat = "1.17.0"
 [plugins]
 userdev = { id = "io.papermc.paperweight.userdev", version = "1.5.5" }
 runpaper = { id = "xyz.jpenilla.run-paper", version = "2.1.0" }
-shadow = { id = "com.github.johnrengelman.shadow", version = "7.1.2" }
+shadow = { id = "com.github.johnrengelman.shadow", version = "8.1.1" }
 lombok = { id = "io.freefair.lombok", version = "6.6.1" }
 paperyml = { id = "net.minecrell.plugin-yml.paper", version = "0.6.0" }
 spotless = { id = "com.diffplug.spotless", version = "6.20.0" }
