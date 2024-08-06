@@ -23,6 +23,6 @@ jobs:
           gradle-version: '8.1.1'
           arguments: build
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.3.4
+        uses: actions/upload-artifact@v4.3.6
         with:
           path: build/libs/**.jar
