@@ -14,5 +14,5 @@ minotaur = { id = "com.modrinth.minotaur", version = "2.8.7" }
 annotations = { module = "org.jetbrains:annotations", version = "24.1.0" }
 guice = { module = "com.google.inject:guice", version = "7.0.0" }
 luckperms = { module = "net.luckperms:api", version = "5.4" }
-bstats = { module = "org.bstats:bstats-bukkit", version = "3.0.2" }
+bstats = { module = "org.bstats:bstats-bukkit", version = "3.0.3" }
 classgraph = { module = "io.github.classgraph:classgraph", version = "4.8.174" }
