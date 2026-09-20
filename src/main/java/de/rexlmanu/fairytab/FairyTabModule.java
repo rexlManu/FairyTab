@@ -1,5 +1,7 @@
 package de.rexlmanu.fairytab;
 
+import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.manager.player.PlayerManager;
 import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import com.google.inject.matcher.Matchers;
@@ -25,7 +27,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitScheduler;
 
 @RequiredArgsConstructor
 public class FairyTabModule extends AbstractModule implements TypeListener {
@@ -33,6 +34,7 @@ public class FairyTabModule extends AbstractModule implements TypeListener {
 
   @Override
   protected void configure() {
+    this.bind(PlayerManager.class).toInstance(PacketEvents.getAPI().getPlayerManager());
     this.bind(JavaPlugin.class).toInstance(this.plugin);
     this.bind(Server.class).toInstance(this.plugin.getServer());
     this.bind(PluginManager.class).toInstance(this.plugin.getServer().getPluginManager());
@@ -43,7 +45,6 @@ public class FairyTabModule extends AbstractModule implements TypeListener {
     this.bind(Logger.class).annotatedWith(PluginLogger.class).toInstance(this.plugin.getLogger());
     this.bind(org.slf4j.Logger.class).toInstance(this.plugin.getSLF4JLogger());
     this.bind(PluginMeta.class).toInstance(this.plugin.getPluginMeta());
-    this.bind(BukkitScheduler.class).toInstance(this.plugin.getServer().getScheduler());
 
     this.bind(MiniMessage.class).toInstance(MiniMessage.miniMessage());
     this.bind(MiniMessage.class)

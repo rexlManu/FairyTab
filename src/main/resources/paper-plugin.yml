@@ -1,0 +1,19 @@
+name: FairyTab
+version: '${version}'
+main: de.rexlmanu.fairytab.FairyTabPlugin
+loader: de.rexlmanu.fairytab.FairyTabLoader
+api-version: '${minecraft}'
+author: rexlManu
+website: https://github.com/rexlManu/FairyTab
+prefix: FairyTab
+dependencies:
+  server:
+    LuckPerms:
+      load: BEFORE
+      required: true
+      join-classpath: true
+    packetevents:
+      load: BEFORE
+      required: true
+      join-classpath: true
+folia-supported: true

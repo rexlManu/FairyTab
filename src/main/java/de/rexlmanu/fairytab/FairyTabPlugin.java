@@ -2,7 +2,9 @@ package de.rexlmanu.fairytab;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import de.rexlmanu.fairytab.nametag.NameTagService;
 import de.rexlmanu.fairytab.tab.TabModule;
+import de.rexlmanu.fairytab.tab.TabService;
 import de.rexlmanu.fairytab.utility.autoregister.ClassAutoLoader;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,10 +21,16 @@ public class FairyTabPlugin extends JavaPlugin {
     this.metrics = new Metrics(this, Constants.BSTATS_SERVICE_ID);
 
     ClassAutoLoader.init(this.injector, this.getClass().getPackageName());
+    this.injector.getInstance(TabService.class).renderAll();
   }
 
   @Override
   public void onDisable() {
-    this.metrics.shutdown();
+    if (this.injector != null) {
+      this.injector.getInstance(NameTagService.class).close();
+    }
+    if (this.metrics != null) {
+      this.metrics.shutdown();
+    }
   }
 }

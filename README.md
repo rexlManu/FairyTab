@@ -1,9 +1,16 @@
 # FairyTab
 
-The ultimate tablist manager for your server.
+A Paper tablist plugin with LuckPerms prefixes, suffixes, colors, and group sorting.
 
-*FairyTab is the forefront of tablist management, offering a plethora of features from dynamic prefixes to intricate
-sorting capabilities. The ideal tool to deliver a polished and immersive tablist experience for your server members.*
+## Requirements
+
+- Paper or Folia 26.2 and Java 25
+- LuckPerms
+- [PacketEvents 2.13.0 or newer](https://modrinth.com/plugin/packetevents)
+
+Spigot and Bukkit are not supported. FairyTab applies prefixes, suffixes, and colors
+to the tablist and names above players' heads. PacketEvents sends the name tag updates
+without using the server scoreboard API.
 
 ## Features
 
@@ -29,9 +36,9 @@ FairyTab auto-fetches necessary data from LuckPerms.
 
 Group-based sorting is determined by group weight.
 
-### Team Color
+### Tab name color
 
-Team color is determined by the user's or group's `tab-color` meta value.
+Tab name color is determined by the user's or group's `tab-color` meta value.
 
 You find all available color values [here](https://docs.advntr.dev/minimessage/format.html#color).
 
@@ -40,7 +47,7 @@ Default is `gray`.
 ## Installation
 
 1. Download the latest version from the [releases page](https://github.com/rexlManu/FairyTab/releases/latest)
-2. Put the plugin into your plugins folder
+2. Put FairyTab, LuckPerms, and PacketEvents into your plugins folder
 3. Restart your server
 
 ## Other permission systems

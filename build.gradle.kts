@@ -1,40 +1,61 @@
 import io.papermc.hangarpublishplugin.model.Platforms
-import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
-import net.minecrell.pluginyml.paper.PaperPluginDescription
 
 plugins {
 	`java-library`
 	alias(libs.plugins.spotless)
 	alias(libs.plugins.lombok)
 	alias(libs.plugins.runpaper)
-	alias(libs.plugins.userdev)
 	alias(libs.plugins.shadow)
-	alias(libs.plugins.paperyml)
 	alias(libs.plugins.minotaur)
 	alias(libs.plugins.hangar)
 }
 
-val versions = listOf("1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6", "1.21", "1.21.1");
+val versions = listOf(libs.versions.minecraft.get())
 
 repositories {
 	mavenCentral()
-	maven("https://jitpack.io")
-	maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+	maven("https://repo.codemc.io/repository/maven-releases/")
 	maven("https://repo.papermc.io/repository/maven-public/")
+	// Tests need the same bundled compatibility classes as the installed plugin.
+	ivy {
+		name = "packetEventsReleases"
+		url = uri("https://github.com/retrooper/packetevents/releases/download")
+		patternLayout {
+			artifact("v[revision]/packetevents-spigot-[revision].[ext]")
+		}
+		metadataSources { artifact() }
+		content { includeModule("com.github.retrooper", "packetevents-runtime") }
+	}
+}
+
+val packetEventsRuntime = configurations.create("packetEventsRuntime") {
+	isCanBeConsumed = false
 }
 
 dependencies {
-	paperweight.paperDevBundle(libs.versions.minecraft)
+	compileOnly(libs.paper)
 
 	compileOnly(libs.guice)
 	compileOnly(libs.classgraph)
 
 	// plugin dependencies
 	compileOnly(libs.luckperms)
+	compileOnly(libs.packetevents.asProvider())
 
 	implementation(libs.bstats)
+
+	testImplementation(libs.paper)
+	testImplementation(libs.packetevents.asProvider())
+	packetEventsRuntime(libs.packetevents.runtime)
+	testImplementation(platform(libs.junit))
+	testImplementation("org.junit.jupiter:junit-jupiter")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testImplementation(libs.mockito)
 }
 
+java {
+	toolchain.languageVersion.set(JavaLanguageVersion.of(25))
+}
 
 spotless {
 	java {
@@ -49,24 +70,42 @@ spotless {
 		target("*.gradle", "*.gradle.kts", "*.md", ".gitignore")
 
 		trimTrailingWhitespace()
-		indentWithTabs()
+		leadingSpacesToTabs()
 		endWithNewline()
 	}
 }
 
 tasks {
+	test {
+		useJUnitPlatform()
+		// Paper's Adventure classes must take precedence over the plugin's bundled fallback.
+		classpath += packetEventsRuntime
+	}
+	runServer {
+		minecraftVersion(libs.versions.minecraft.get())
+	}
 	compileJava {
 		options.encoding = Charsets.UTF_8.name()
-		options.release.set(17)
+		options.release.set(25)
 	}
 	processResources {
 		filteringCharset = Charsets.UTF_8.name()
+		val properties = mapOf(
+			"version" to project.version,
+			"minecraft" to libs.versions.minecraft.get(),
+			"guice" to libs.guice.get().toString(),
+			"classgraph" to libs.classgraph.get().toString(),
+		)
+		inputs.properties(properties)
+		filesMatching(listOf("paper-plugin.yml", "libraries.properties")) {
+			expand(properties)
+		}
 	}
 	javadoc {
 		options.encoding = Charsets.UTF_8.name()
 	}
 	assemble {
-		dependsOn(reobfJar)
+		dependsOn(shadowJar)
 	}
 	jar {
 		enabled = false
@@ -76,30 +115,8 @@ tasks {
 		relocate("org.bstats", "de.rexlmanu.fairytab.dependencies.bstats")
 		from(file("LICENSE"))
 
-		dependencies {
-			exclude("META-INF/NOTICE")
-			exclude("META-INF/maven/**")
-			exclude("META-INF/versions/**")
-			exclude("META-INF/**.kotlin_module")
-		}
+		exclude("META-INF/NOTICE", "META-INF/maven/**", "META-INF/**.kotlin_module")
 		minimize()
-	}
-}
-
-paper {
-	main = "de.rexlmanu.fairytab.FairyTabPlugin"
-	loader = "de.rexlmanu.fairytab.FairyTabLoader"
-	website = "https://github.com/rexlManu/FairyTab"
-	author = "rexlManu"
-	foliaSupported = true
-	apiVersion = "1.20"
-	load = BukkitPluginDescription.PluginLoadOrder.POSTWORLD
-	prefix = "FairyTab"
-	serverDependencies {
-		register("LuckPerms") {
-			load = PaperPluginDescription.RelativeLoadOrder.BEFORE
-			required = true
-		}
 	}
 }
 
@@ -115,12 +132,13 @@ modrinth {
 
 	syncBodyFrom.set(rootProject.file("README.md").readText())
 
-	uploadFile.set(buildDir.resolve("libs").resolve("FairyTab-${rootProject.version}.jar"))
+	uploadFile.set(tasks.shadowJar.flatMap { it.archiveFile })
 	gameVersions.addAll(versions)
 	loaders.addAll(listOf("paper", "purpur", "folia"))
 	changelog.set(System.getenv("MODRINTH_CHANGELOG"))
 	dependencies {
 		required.project("luckperms")
+		required.project("packetevents")
 	}
 }
 
