@@ -1,6 +1,6 @@
 [versions]
 minecraft = "26.2"
-paper = "26.2.build.126-stable"
+paper = "26.3.build.205-stable"
 packetevents = "2.14.0"
 googlejavaformat = "1.36.1"
 [plugins]
