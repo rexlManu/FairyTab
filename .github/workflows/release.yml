@@ -26,7 +26,7 @@ jobs:
         with:
           path: build/libs/**.jar
       - name: Generating Changelog
-        uses: ardalanamini/auto-changelog@v4
+        uses: ardalanamini/auto-changelog@v5
         id: changelog
       - name: Create Release
         uses: softprops/action-gh-release@v2
